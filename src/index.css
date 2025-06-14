@@ -2,102 +2,172 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
-
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+  body {
+    @apply bg-background text-gray-900 font-sans;
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+  h1, h2, h3, h4 {
+    @apply font-bold text-primary;
+    letter-spacing: 0.01em;
+  }
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.5rem;}
+  h3 { font-size: 1.1rem; }
+  .text-heading { @apply font-bold text-primary; }
+  .text-muted-foreground { @apply text-gray-500; }
+  .text-body { @apply font-medium text-gray-800;}
+}
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+@layer components {
+  /* Enhanced Card */
+  .metric-card, .card {
+    @apply rounded-[8px] shadow-card bg-white border border-gray-200 relative p-6;
+    border-left-width: 5px;
+    border-top-width: 0 !important; /* FIX: only left accent, no top accent */
+    animation: card-pop 0.3s;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .metric-card:hover, .card:hover {
+    @apply shadow-card-hover;
+    transform: translateY(-2px) scale(1.015);
+  }
+  /* Card Accent Bar */
+  .card-accent-bar {
+    border-top-width: 0 !important;
+    border-left-width: 5px;
+    border-radius: 8px;
+  }
+  .card-accent-red { border-left-color: #ef4444; }
+  .card-accent-green { border-left-color: #22c55e; }
+  .card-accent-blue { border-left-color: #1E3A8A; }
+  .card-accent-purple { border-left-color: #6D28D9; }
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  /* Searchbar tweak */
+  .topbar-search {
+    @apply w-full h-10 pl-10 pr-3 bg-[#F5F7FA] font-normal border-0 border-b-2 border-primary rounded-none focus:outline-none focus:border-fuchsia text-[15px];
+    color: #5a6270; /* medium gray for input text */
+    box-shadow: none;
+    transition: border-color 0.15s;
+  }
+  .topbar-search::placeholder {
+    color: #7e869e !important;
+    opacity: 1;
+  }
+  .topbar-search-icon {
+    color: #7e869e;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  /* Alert blocks inside cards */
+  .alert-block {
+    @apply flex items-center gap-2 p-2 rounded;
+    background-color: #FEE2E2 !important; /* light, friendly red */
+    border: none !important;
+  }
+  .alert-block .icon-bg {
+    background-color: #f2f4fa !important;
+  }
+  .alert-block-title {
+    color: #B91C1C !important;  /* softer deep red */
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .alert-block-desc {
+    color: #c62828;
+    font-size: 13px;
+  }
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+  /* Improved Badge */
+  .badge {
+    font-size: 13px !important;
+    min-height: 28px !important;
+    padding: 0 12px !important;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+    border-radius: 6px !important;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+  /* Card header titles */
+  .card-title {
+    @apply text-primary text-lg font-bold leading-snug mb-1;
+    letter-spacing: 0.01em;
+  }
+  .card-header {
+    @apply pb-2 mb-0;
+  }
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  /* Add more grid gap if needed */
+  .dashboard-card-grid {
+    gap: 1.5rem;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+/* Slim, neutral scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background: #edeef0;
+}
+::-webkit-scrollbar-thumb {
+  background: #b2b7c2;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9297a5;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
-  body {
-    @apply bg-background text-foreground;
-  }
+/* Firefox */
+html {
+  scrollbar-color: #b2b7c2 #edeef0;
+  scrollbar-width: thin;
+}
+
+/* Card/scroll-area rounded scrollbars if applicable */
+.card,
+.metric-card,
+.modal,
+[data-radix-scroll-area-viewport] {
+  scrollbar-color: #b2b7c2 #edeef0;
+  scrollbar-width: thin;
+}
+
+/* Remove legacy card padding from outer cards (cards now use p-6, grid sets gap) */
+.card,
+.metric-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Utility for card accent bar -- already above */
+
+/* Info icon background circle */
+.icon-bg {
+  background: #f2f4fa !important;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+/* Alert icon color fix */
+.alert-block .icon-bg svg {
+  color: #1E3A8A !important;
+}
+
+/* Remove accidental double border on accent cards (both top and left) */
+.card:not(.card-accent-bar) {
+  border-top-width: 0 !important;
+}
+.metric-card:not(.card-accent-bar) {
+  border-top-width: 0 !important;
 }
