@@ -1,20 +1,22 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
+// Accepts accent, applies left colored border if provided (and drop shadow, rounded corners)
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { accent?: "red" | "green" | "blue" | "purple" }
+>(( { className, accent, ...props }, ref ) => (
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
+      "card", // use .card utility for common style and accent
+      accent ? `card-accent-bar card-accent-${accent}` : "",
+      className,
+      "overflow-hidden"
     )}
     {...props}
   />
-))
+));
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<
